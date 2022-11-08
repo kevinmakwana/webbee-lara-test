@@ -83,13 +83,14 @@ class CreateCinemaSchema extends Migration
             $table->timestamps();
         });
 
-        Schema::create('shows', function($table) {
+        Schema::create('movie_shows', function($table) {
             $table->increments('id');
             $table->dateTime('date');
             $table->dateTime('start_time');
             $table->dateTime('end_time');
             $table->integer('cinema_hall_id')->unsigned();
             $table->foreign('cinema_hall_id')->references('id')->on('cinema_halls')->onDelete('cascade');
+            $table->enum('status',['housefull','not_housfull']);
             $table->timestamps();
         });
 
@@ -102,8 +103,8 @@ class CreateCinemaSchema extends Migration
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
-            $table->integer('show_id')->unsigned();
-            $table->foreign('show_id')->references('id')->on('shows')->onDelete('cascade');
+            $table->integer('movie_show_id')->unsigned();
+            $table->foreign('movie_show_id')->references('id')->on('movie_shows')->onDelete('cascade');
             
             $table->timestamps();
         });
@@ -114,8 +115,8 @@ class CreateCinemaSchema extends Migration
             $table->integer('booking_id')->unsigned();
             $table->foreign('booking_id')->references('id')->on('bookings')->onDelete('cascade');
 
-            $table->integer('show_id')->unsigned();
-            $table->foreign('show_id')->references('id')->on('shows')->onDelete('cascade');
+            $table->integer('movie_show_id')->unsigned();
+            $table->foreign('movie_show_id')->references('id')->on('movie_shows')->onDelete('cascade');
             
             $table->integer('cinema_hall_seat_id')->unsigned();
             $table->foreign('cinema_hall_seat_id')->references('id')->on('cinema_hall_seats')->onDelete('cascade');
